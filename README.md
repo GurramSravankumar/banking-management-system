@@ -83,27 +83,105 @@ Account transfer methodologies fundamentally rely inherently upon ACID principle
 ```text
 SpringSecurity/
 ├── src/main/java/com/sk/SpringSecurity/
+│   ├── SpringSecurityApplication.java
+│   │
 │   ├── config/
-│   │   ├── DatabaseSeeder.java         # Master test account insertions
-│   │   ├── WebConfig.java              # Advanced CORS & Filter mappings
-│   │   └── SecurityFilterChain.java    # Universal Security limitations
+│   │   ├── JwtAuthenticationFilter.java  # Intercepts native Bearer signatures
+│   │   ├── SecurityConfig.java           # Endpoint access configurations
+│   │   └── WebConfig.java                # Preflight CORS logic bindings
 │   │
 │   ├── controller/
-│   │   ├── AdminController.java        # Protected overarching Manipulators
-│   │   └── TransactionController.java  # Payment & Money exchange gateways
+│   │   ├── AdminController.java          # High-level override endpoints
+│   │   ├── AuthController.java           # Initial Session & Tokens
+│   │   ├── KycController.java            # Verification portals
+│   │   ├── LoanController.java           # Borrowing state executions
+│   │   └── UserController.java           # Active profile gateways
 │   │
 │   ├── dtos/
-│   │   └── AdminUserUpdateRequestDTO.java # Strict object injection limits
+│   │   ├── AccountDetailsDTO.java
+│   │   ├── AccountSummaryDTO.java
+│   │   ├── AddBeneficiaryRequestDTO.java
+│   │   ├── AdminAmountRequestDTO.java
+│   │   ├── AdminTransactionReversalRequestDTO.java
+│   │   ├── AdminUserUpdateRequestDTO.java
+│   │   ├── ApiErrorResponseDTO.java
+│   │   ├── BeneficiaryResponseDTO.java
+│   │   ├── KycResponseDTO.java
+│   │   ├── KycUploadRequestDTO.java
+│   │   ├── LoanApplicationRequestDTO.java
+│   │   ├── LoanResponseDTO.java
+│   │   ├── LoginRequestDTO.java
+│   │   ├── LoginResponseDTO.java
+│   │   ├── MiniStatementResponseDTO.java
+│   │   ├── OpenAccountRequestDTO.java
+│   │   ├── RegisterRequestDTO.java
+│   │   ├── RegisterResponseDTO.java
+│   │   ├── TransactionReceiptResponseDTO.java
+│   │   ├── TransactionResponseDTO.java
+│   │   ├── TransferMoneyRequestDTO.java
+│   │   ├── UpdateUserProfileRequestDTO.java
+│   │   ├── UserProfileResponseDTO.java
+│   │   └── UserResponseDTO.java
 │   │
-│   ├── entity/ (models)
-│   │   ├── User.java                   # Primary account identifiers
-│   │   └── Account.java                # Financial property containers
+│   ├── Entity/
+│   │   ├── AccountLedger.java            # Mathematical history trace blocks
+│   │   ├── AdminAuditLog.java            # Immutable action tracing
+│   │   ├── BankAccount.java              # Physical persistence balance tables
+│   │   ├── Beneficiary.java              # Approved transference networks
+│   │   ├── Loan.java                     # Advanced dynamic principal arrays
+│   │   ├── Notification.java             # Systemic UI alerts
+│   │   ├── Transaction.java              # Isolated state changes
+│   │   ├── User.java                     # Master entity records
+│   │   └── UserVerification.java         # Document storage links
+│   │
+│   ├── enums/
+│   │   ├── AccountStatus.java
+│   │   ├── AccountType.java
+│   │   ├── KycStatus.java
+│   │   ├── LedgerType.java
+│   │   ├── LoanStatus.java
+│   │   ├── LoanType.java
+│   │   ├── NotificationChannel.java
+│   │   ├── NotificationStatus.java
+│   │   ├── Role.java
+│   │   ├── TransactionMode.java
+│   │   ├── TransactionStatus.java
+│   │   ├── TransactionType.java
+│   │   └── UserStatus.java
 │   │
 │   ├── exception/
-│   │   └── GlobalExceptionHandler.java # Uniform REST error specifications
+│   │   └── GlobalExceptionHandler.java   # @ControllerAdvice intercept hooks
+│   │
+│   ├── Kyc/
+│   │   ├── AadhaarParserServiceImpl.java # Physical OCR integration extraction
+│   │   ├── DocumentVerificationServiceImpl.java
+│   │   ├── FileStorageServiceImpl.java   # Native BLOB chunk isolation
+│   │   └── OcrServiceImpl.java           # Base optical scanning mappings
+│   │
+│   ├── repositories/
+│   │   ├── AccountLedgerRepository.java
+│   │   ├── AccountRepository.java
+│   │   ├── AdminAuditLogRepository.java
+│   │   ├── BeneficiaryRepository.java
+│   │   ├── LoanRepository.java
+│   │   ├── NotificationRepository.java
+│   │   ├── TransactionRepository.java
+│   │   ├── UserRepository.java
+│   │   └── UserVerificationRepository.java
+│   │
+│   ├── security/
+│   │   └── AppUserDetails.java           # Active GrantedAuthorities mappings
 │   │
 │   └── service/
-│       └── ValidationServiceImpl.java  # Database mutation constraints
+│       ├── AdminServiceImpl.java         # Master transactional overrides
+│       ├── AuthServiceImpl.java          # JWT Signatures & Hashing wrappers
+│       ├── CurrentUserService.java       # LocalContext static fetching bindings
+│       ├── CustomUserDetailsService.java
+│       ├── JwtService.java
+│       ├── LoanAutopayScheduler.java     # CRON-based math deductions
+│       ├── LoanServiceImpl.java
+│       ├── NotificationServiceImpl.java
+│       └── UserServiceImpl.java
 ```
 
 ---
