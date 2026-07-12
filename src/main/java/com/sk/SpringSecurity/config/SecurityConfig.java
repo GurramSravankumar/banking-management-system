@@ -21,42 +21,44 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-	
-	private final JwtAuthenticationFilter jwtAuthenticationFilter ;
-	
+
+	private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
-	AuthenticationManager authenticationManager(AuthenticationConfiguration config)throws Exception{
+	AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
 	}
 
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
-		
-		http 
-			.cors(cors -> {})
-			.csrf(csrf -> csrf.disable())
-			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authorizeHttpRequests(auth -> auth
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+		http
+				.cors(cors -> {
+				})
+				.csrf(csrf -> csrf.disable())
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/auth/**", "/uploads/**")
- 					.permitAll()
-					.requestMatchers("/api/admin/**")
-					.hasRole("ADMIN")
-					.requestMatchers("/api/user/**")
-					.hasAnyRole("USER","ADMIN")
-					.anyRequest().authenticated())
-			        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+						.permitAll()
+						.requestMatchers("/api/admin/**")
+						.hasRole("ADMIN")
+						.requestMatchers("/api/user/**")
+						.hasAnyRole("USER", "ADMIN")
+						.anyRequest().authenticated())
+				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
 
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://127.0.0.1:5173"));
+		configuration.setAllowedOrigins(
+				List.of("http://localhost:5173", "http://127.0.0.1:5173", "https://gurramsravankumar.github.io"));
 		configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
 		configuration.setAllowCredentials(true);
